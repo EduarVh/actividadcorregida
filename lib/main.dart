@@ -10,31 +10,63 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false, 
+      debugShowCheckedModeBanner: false, // Oculta la etiqueta de debug
       title: 'Mi Primera App Flutter',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const HomePage(),
+      home: const MyHomePage(title: 'Pantalla Principal'),
     );
   }
 }
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key, required this.title});
+
+  final String title;
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  int _counter = 0;
+
+  void _incrementCounter() {
+    setState(() {
+      _counter++;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Pantalla Principal'),
+        title: Text(widget.title),
         centerTitle: true,
       ),
-      body: const Center(
-        child: Text(
-          '¡Hola, mundo en Flutter!',
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const Text(
+              'Has presionado el botón:',
+              style: TextStyle(fontSize: 20),
+            ),
+            Text(
+              '$_counter',
+              style: const TextStyle(
+                fontSize: 36,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _incrementCounter,
+        tooltip: 'Incrementar',
+        child: const Icon(Icons.add),
       ),
     );
   }
